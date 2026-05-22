@@ -1,0 +1,26 @@
+
+
+Start in virtual environment: (activate with "source .venv/bin/activate"):
+
+	- Start Velocitas Runtime: velocitas exec runtime-local up
+
+	- export PYTHONPATH="/home/elias/fetch_ASI_one/SmartWiperApp/gen/vehicle_model:$PYTHONPATH"
+	
+	- python app/SmartWiper.py -> important because it looks at import root /app
+
+To change standart values from the velocitas app (KUKSA)
+
+pip install kuksa-client
+kuksa-client grpc://127.0.0.1:55555
+
+cod
+
+setValue Vehicle.Speed 0
+setValue Vehicle.Body.Windshield.Front.Wiping.Mode "MEDIUM"
+setValue Vehicle.Body.Hood.IsOpen true
+
+Fetch.ai:
+Set up the agent in the agentverse (blank template)
+set up mailbox from the agent inspector (link pop up when you run it the first time)
+
+
