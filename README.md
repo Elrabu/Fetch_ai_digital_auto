@@ -1,6 +1,6 @@
-# SmartWiper
+# Fetch_ai_digital_auto
 
-Velocitas vehicle app that uses ASI:One (Fetch.ai) to make safety-aware
+a velocitas vehicle app that uses the platform ASI:One to make safety-aware
 wiper decisions based on VSS signals (hood state, wiper mode, speed).
 
 ## Hierarchy
