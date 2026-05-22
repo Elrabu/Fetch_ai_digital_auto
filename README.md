@@ -5,7 +5,7 @@ wiper decisions based on VSS signals (hood state, wiper mode, speed).
 
 ## Hierarchy
 ```
- ├── SmartWiperAgents
+ ├── smartwiper
  ├── SmartWiperApp
 ```
 
