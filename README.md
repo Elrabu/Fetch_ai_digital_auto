@@ -106,8 +106,8 @@ this creates the Velocitas-Runtime (Kuksa Databroker, MQTT, Mock-Service) that i
 git clone https://github.com/eclipse-velocitas/vehicle-app-python-template.git SmartWiperApp
 cd SmartWiperApp
 ```
-/SmartWiperAgents
-### 2. pull the packages declared in .velocitas.json
+
+### 2. pull the packages declared in velocitas.json
 ```
 velocitas init
 ```
