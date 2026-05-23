@@ -5,8 +5,8 @@ wiper decisions based on VSS signals (hood state, wiper mode, speed).
 
 ## Hierarchy
 ```
- ├── smartwiper
- ├── SmartWiperApp
+ ├── smartwiper <- fetch.ai agent logic and bridge to ASI:One and Velocitas
+ ├── SmartWiperApp <- Velocitas Runtime 
 ```
 
 ## Requirements
