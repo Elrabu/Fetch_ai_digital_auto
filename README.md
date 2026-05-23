@@ -9,6 +9,7 @@ wiper decisions based on VSS signals (hood state, wiper mode, speed).
  ├── SmartWiperApp
 ```
 
+## Requirements
 | Tool             | Version          | Purpose                              |
 |------------------|------------------|--------------------------------------|
 | Ubuntu / WSL2    | 24.04+           | Host OS                              |
