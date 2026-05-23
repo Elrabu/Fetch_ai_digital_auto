@@ -18,6 +18,87 @@ wiper decisions based on VSS signals (hood state, wiper mode, speed).
 | Velocitas CLI    | latest           | Velocitas project tooling            |
 | ASI:One API key  | —                | LLM access (https://asi1.ai/))       |
 
+## agentverse.ai Setup
+
+create an agent from the **Blank Agent** template at https://agentverse.ai/agents. Use this code in ```agent.py```:
+
+```
+from datetime import datetime
+from uuid import uuid4
+from uagents import Agent, Context, Protocol, Model
+from uagents_core.contrib.protocols.chat import (
+    ChatMessage,
+    ChatAcknowledgement,
+    TextContent,
+    chat_protocol_spec,
+)
+
+# ---------- Structured protocol (for Velocitas bridge) ----------
+class WiperSafetyRequest(Model):
+    hood_is_open: bool
+    current_wiper_mode: str
+    vehicle_speed: float
+
+class WiperSafetyResponse(Model):
+    risk_level: str           # LOW | MEDIUM | HIGH
+    assessment: str
+    recommended_action: str   # STOP_WIPER | KEEP_WIPER | REDUCE_WIPER
+
+agent = Agent()  # On Agentverse, name/seed/endpoint are managed by the platform
+
+def assess(hood_open: bool, mode: str, speed: float):
+    if hood_open and mode.upper() != "OFF":
+        return ("HIGH",
+                "Hood is open while wipers are active — mechanical collision risk.",
+                "STOP_WIPER")
+    if hood_open:
+        return ("LOW", "Hood open but wipers off — no immediate risk.", "KEEP_WIPER")
+    return ("LOW", "Nominal conditions.", "KEEP_WIPER")
+
+# ---------- Structured endpoint (used by your Velocitas bridge) ----------
+safety_proto = Protocol("WiperSafety", version="1.0")
+
+@safety_proto.on_message(model=WiperSafetyRequest, replies=WiperSafetyResponse)
+async def handle_safety(ctx: Context, sender: str, msg: WiperSafetyRequest):
+    risk, reason, action = assess(msg.hood_is_open, msg.current_wiper_mode, msg.vehicle_speed)
+    ctx.logger.info(f"[Safety] {sender} → {risk}: {action}")
+    await ctx.send(sender, WiperSafetyResponse(
+        risk_level=risk, assessment=reason, recommended_action=action))
+
+# ---------- Chat protocol (makes the agent discoverable on ASI:One) ----------
+chat_proto = Protocol(spec=chat_protocol_spec)
+
+@chat_proto.on_message(ChatMessage)
+async def on_chat(ctx: Context, sender: str, msg: ChatMessage):
+    await ctx.send(sender, ChatAcknowledgement(
+        timestamp=datetime.utcnow(), acknowledged_msg_id=msg.msg_id))
+
+    text = " ".join(c.text for c in msg.content if isinstance(c, TextContent)).lower()
+    # naive parse for chat callers
+    hood_open = "hood" in text and ("open" in text or "true" in text)
+    mode = "MEDIUM" if "wiper" in text or "wiping" in text else "OFF"
+    risk, reason, action = assess(hood_open, mode, 0.0)
+
+    reply = f"Risk: {risk}\nReason: {reason}\nRecommended action: {action}"
+    await ctx.send(sender, ChatMessage(
+        timestamp=datetime.utcnow(),
+        msg_id=uuid4(),
+        content=[TextContent(type="text", text=reply)],
+    ))
+
+@chat_proto.on_message(ChatAcknowledgement)
+async def on_ack(ctx: Context, sender: str, msg: ChatAcknowledgement):
+    pass
+
+agent.include(safety_proto, publish_manifest=True)
+agent.include(chat_proto, publish_manifest=True)
+```
+press **Start Agent** to publish your agent. The GUI should look like this:
+
+<img width="1352" height="131" alt="image" src="https://github.com/user-attachments/assets/acc9b79d-cda9-4e7c-8997-7e981020e46a" />
+
+copy the agent address starting with ```agent1q...``` for a later step
+
 ## Velocitas Runtime Setup (SmartWiperApp)
 this creates the Velocitas-Runtime (Kuksa Databroker, MQTT, Mock-Service) that is used by the "vehicle" model inside "SmartWiperAgents"
 
