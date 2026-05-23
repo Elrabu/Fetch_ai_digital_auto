@@ -70,8 +70,11 @@ nano .env
 
 content of .env:
 ```
-ASI1_API_KEY
+ASI1_API_KEY=ASI:One_API_key_here
+SAFETY_AGENT_ADDRESS=agentverse_agent_address
 ```
+
+
 
 
 
