@@ -125,7 +125,7 @@ velocitas exec runtime-local up
 
 ## Agents + Fetch.ai setup
 
-### Create virtual environment
+### 1. Create virtual environment
 
 ```
 python3 -m venv .venv
@@ -133,15 +133,15 @@ source .venv/bin/activate
 pip install --upgrade pip
 ```
 
-### Install Dependencies
+### 2. Install Dependencies
 
 ```
 pip install -r requirements.txt
 ```
 
-### configure environment variables
+### 3. configure environment variables
 
-Get a ASI:One API key from the website https://asi1.ai/ by creating an account and then go to dashboard -> API keys
+Get a ASI:One API key from the website https://asi1.ai/ by creating an account and then go to your profile -> Developer -> API keys
 
 ```
 cd ~/YOUR_PROJECT_ROOT
@@ -154,6 +154,29 @@ content of .env:
 ASI1_API_KEY=ASI:One_API_key_here
 SAFETY_AGENT_ADDRESS=agentverse_agent_address
 ```
+
+### 4. fix imports
+
+```
+cd ~/YOUR_PROJECT_ROOT/smartwiper/bridge
+touch smartwiper/__init__.py
+```
+
+### 5. set PYTHONPATH for ```vehicle``` import
+
+```
+
+```
+
+### 6. start smartwiper app
+
+```
+cd ~/YOUR_PROJECT_ROOT/smartwiper
+python -m smartwiper.py
+```
+
+## KUKSA Databroker
+
 
 
 
