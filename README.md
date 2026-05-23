@@ -1,6 +1,6 @@
 # Fetch_ai_digital_auto
 
-a velocitas vehicle app that uses the platform ASI:One to make safety-aware
+a velocitas vehicle app that uses a fetch.ai agent hosted on the ASI:One platform to make safety-aware
 wiper decisions based on VSS signals (hood state, wiper mode, speed).
 
 ## Hierarchy
