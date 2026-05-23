@@ -165,7 +165,7 @@ touch smartwiper/__init__.py
 ### 5. set PYTHONPATH for ```vehicle``` import
 
 ```
-
+export PYTHONPATH="/YOUR/HOME/DIRECTORY/PROJECTNAME/SmartWiperApp/gen/vehicle_model:$PYTHONPATH"
 ```
 
 ### 6. start smartwiper app
@@ -177,6 +177,22 @@ python -m smartwiper.py
 
 ## KUKSA Databroker
 
+setup Kuksa client
+```
+pip install kuksa-client
+```
+
+start with 
+```
+kuksa-client grpc://127.0.0.1:55555
+```
+
+change mock values with
+```
+setValue Vehicle.Speed 0
+setValue Vehicle.Body.Windshield.Front.Wiping.Mode "MEDIUM"
+setValue Vehicle.Body.Hood.IsOpen true
+```
 
 
 
