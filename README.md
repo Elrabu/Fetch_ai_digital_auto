@@ -15,8 +15,6 @@ wiper decisions based on VSS signals (hood state, wiper mode, speed).
 | Ubuntu / WSL2    | 24.04+           | Host OS                              |
 | Python           | 3.12+            | App runtime                          |
 | Docker           | 24+              | Kuksa databroker container           |
-| Git              | any              | Version control                      |
-| Velocitas CLI    | latest           | Velocitas project tooling            |
 | ASI:One API key  | —                | LLM access (https://asi1.ai/))       |
 
 ## agentverse.ai Setup
