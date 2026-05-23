@@ -11,7 +11,7 @@ wiper decisions based on VSS signals (hood state, wiper mode, speed).
 
 | Tool             | Version          | Purpose                              |
 |------------------|------------------|--------------------------------------|
-| Ubuntu / WSL2    | 22.04+           | Host OS                              |
+| Ubuntu / WSL2    | 24.04+           | Host OS                              |
 | Python           | 3.12+            | App runtime                          |
 | Docker           | 24+              | Kuksa databroker container           |
 | Git              | any              | Version control                      |
